@@ -1,15 +1,33 @@
 export default class DonateForm {
   #form;
+  #totalAmount;
+  #createNewDonate;
 
-  constructor() {
-    this.#form = document.createElement('div');
-    this.#form.className = 'donate-form'
+  constructor(totalAmount, createNewDonate) {
+    this.#createNewDonate = createNewDonate;
+    this.#totalAmount = totalAmount;
+    this.#form = document.createElement('form');
+    this.#form.className = 'donate-form';
+
+    this.#donateFormHandler();
+  }
+
+  #updateTotalAmount(newAmount) {
+    return `$${newAmount}`;
+  }
+
+  #donateFormHandler() {
+    this.#form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log('submit');
+    })
+
   }
 
   render() {
     const title = document.createElement('h1');
     title.className = 'total-amount';
-    title.textContent = '28$';
+    title.textContent = this.#updateTotalAmount(this.#totalAmount);
 
     const label = document.createElement('label');
     label.className = 'donate-form__input-label';
