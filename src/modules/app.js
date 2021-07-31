@@ -1,5 +1,6 @@
 import DonateForm from "./donate-form";
 import { DonateList } from "./donate-list";
+import * as utils from '../core/utils/index';
 
 export default class App {
   #form;
@@ -8,7 +9,7 @@ export default class App {
   constructor(donates) {
     this.state = {
       donates: donates,
-      totalAmount: 0,
+      totalAmount: utils.calculateSumOfNumbers(donates.map(({ amount }) => amount)),
     }
     this.#form = new DonateForm(this.state.totalAmount, this.createNewDonate.bind(this));
     this.#list = new DonateList(this.state.donates);

@@ -1,4 +1,5 @@
 import { Settings as set } from "../core/constants/settings";
+import * as utils from '../core/utils/index';
 
 export class DonateList {
   #donates;
@@ -16,7 +17,7 @@ export class DonateList {
   #createDonate(date, amount) {
     const donate = document.createElement('div');
     donate.className = 'donate-item';
-    donate.textContent = `${date} - `;
+    donate.textContent = `${utils.getFormattedTime(date)} - `;
 
     const bold = document.createElement('b');
     bold.textContent = `${amount}${set.currency}`;
