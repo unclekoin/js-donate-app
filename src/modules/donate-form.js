@@ -1,3 +1,5 @@
+import { Settings as set } from "../core/constants/settings";
+
 export default class DonateForm {
   #form;
   #totalAmount;
@@ -12,14 +14,22 @@ export default class DonateForm {
     this.#donateFormHandler();
   }
 
-  #updateTotalAmount(newAmount) {
-    return `$${newAmount}`;
+  updateTotalAmount(newAmount) {
+    return `${newAmount}${set.currency}`;
   }
 
   #donateFormHandler() {
     this.#form.addEventListener('submit', (event) => {
       event.preventDefault();
-      console.log('submit');
+      const { target } = event;
+      const input = target.amount;
+
+      const newDonate = {
+        date: new Date(),
+        amount: Number(input.value)
+      }
+      this.#createNewDonate(newDonate)
+      input.value = '';
     })
 
   }
@@ -27,11 +37,11 @@ export default class DonateForm {
   render() {
     const title = document.createElement('h1');
     title.className = 'total-amount';
-    title.textContent = this.#updateTotalAmount(this.#totalAmount);
+    title.textContent = this.updateTotalAmount(this.#totalAmount);
 
     const label = document.createElement('label');
     label.className = 'donate-form__input-label';
-    label.textContent = 'Enter the amount in $';
+    label.textContent = `Enter the amount in ${set.currency}`;
 
     const input = document.createElement('input');
     input.className = 'donate-form__donate-input';

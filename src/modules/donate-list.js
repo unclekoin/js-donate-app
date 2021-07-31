@@ -1,4 +1,6 @@
-export default class DonateList {
+import { Settings as set } from "../core/constants/settings";
+
+export class DonateList {
   #donates;
   #container;
   #donateList;
@@ -17,13 +19,13 @@ export default class DonateList {
     donate.textContent = `${date} - `;
 
     const bold = document.createElement('b');
-    bold.textContent = `$${amount}`;
+    bold.textContent = `${amount}${set.currency}`;
     donate.append(bold);
 
     return donate;
   }
 
-  #updateDonates(updatedDonates) {
+  updateDonates(updatedDonates) {
     this.#donateList.innerHTML = '';
     updatedDonates.forEach(({ date, amount }) => {
       this.#donateList.append(this.#createDonate(date, amount));
@@ -35,7 +37,7 @@ export default class DonateList {
     title.className = 'donates-container__title';
     title.textContent = 'Donates List';
 
-    this.#updateDonates(this.#donates);
+    this.updateDonates(this.#donates);
 
     this.#container.append(title, this.#donateList);
     return this.#container;
